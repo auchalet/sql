@@ -1,0 +1,362 @@
+-- phpMyAdmin SQL Dump
+-- version 4.2.12deb2+deb8u1build0.15.04.1
+-- http://www.phpmyadmin.net
+--
+-- Client :  localhost
+-- Généré le :  Mar 15 Décembre 2015 à 16:53
+-- Version du serveur :  5.6.27-0ubuntu0.15.04.1
+-- Version de PHP :  5.6.4-4ubuntu6.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Base de données :  `hvtv`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `account`
+--
+
+CREATE TABLE IF NOT EXISTS `account` (
+`id_account` int(11) NOT NULL,
+  `pseudo` varchar(128) NOT NULL,
+  `sex` varchar(128) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `favorite_category` int(11) DEFAULT NULL,
+  `past` text,
+  `present` text,
+  `future` text,
+  `why_register` text,
+  `skills` text,
+  `interests` text,
+  `other` text,
+  `newsletter` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `account`
+--
+
+INSERT INTO `account` (`id_account`, `pseudo`, `sex`, `age`, `favorite_category`, `past`, `present`, `future`, `why_register`, `skills`, `interests`, `other`, `newsletter`, `user_id`) VALUES
+(1, 'Devow', 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, 2),
+(2, 'Devow', 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `forum_category`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_category` (
+`id` int(11) NOT NULL,
+  `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `status` float NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_category` int(11) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `meta_title` text COLLATE utf8_unicode_ci,
+  `meta_description` text COLLATE utf8_unicode_ci,
+  `meta_keyword` text COLLATE utf8_unicode_ci
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `forum_category`
+--
+
+INSERT INTO `forum_category` (`id`, `title`, `description`, `status`, `id_user`, `id_category`, `createdAt`, `updatedAt`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(1, 'Thème 1', 'dffsdmk', 1, 2, NULL, '2015-12-01 20:48:32', '0000-00-00 00:00:00', NULL, NULL, NULL),
+(2, 'Catégorie 1', 'fdsdfds', 1, 1, 1, '2015-12-01 20:48:57', '0000-00-00 00:00:00', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `forum_post`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_post` (
+`id` int(11) NOT NULL,
+  `title` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `content` text CHARACTER SET latin1 NOT NULL,
+  `score` float NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_topic` int(11) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `meta_title` text CHARACTER SET latin1,
+  `meta_description` text CHARACTER SET latin1,
+  `meta_keyword` text CHARACTER SET latin1
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `forum_post`
+--
+
+INSERT INTO `forum_post` (`id`, `title`, `content`, `score`, `id_user`, `id_topic`, `createdAt`, `updatedAt`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(1, 'Topic 1', 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', 0, 2, 1, '2015-12-01 20:49:54', '2015-12-01 19:49:54', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `forum_topic`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_topic` (
+`id` int(11) NOT NULL,
+  `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `status` float NOT NULL,
+  `slug` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_category` int(11) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `meta_title` text COLLATE utf8_unicode_ci,
+  `meta_description` text COLLATE utf8_unicode_ci,
+  `meta_keyword` text COLLATE utf8_unicode_ci
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Contenu de la table `forum_topic`
+--
+
+INSERT INTO `forum_topic` (`id`, `title`, `status`, `slug`, `id_user`, `id_category`, `createdAt`, `updatedAt`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(1, 'Topic 1', 0, NULL, 2, 2, '2015-12-01 19:49:31', '2015-12-01 19:49:31', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `member`
+--
+
+CREATE TABLE IF NOT EXISTS `member` (
+`id_member` int(11) NOT NULL,
+  `adhesion` date NOT NULL,
+  `position` varchar(255) NOT NULL,
+  `paid` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `member`
+--
+
+INSERT INTO `member` (`id_member`, `adhesion`, `position`, `paid`, `user_id`) VALUES
+(1, '2015-11-11', 'Président', 1, 2),
+(2, '2015-11-11', 'Président', 1, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `migration`
+--
+
+CREATE TABLE IF NOT EXISTS `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Contenu de la table `migration`
+--
+
+INSERT INTO `migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1442339891),
+('m130524_201442_init', 1442339926),
+('m140608_173539_create_user_table', 1447366467),
+('m140611_133903_init_rbac', 1447366468),
+('m140808_073114_create_auth_item_group_table', 1447366468),
+('m140809_072112_insert_superadmin_to_user', 1447366469),
+('m140809_073114_insert_common_permisison_to_auth_item', 1447366469),
+('m141023_141535_create_user_visit_log', 1447366469),
+('m141116_115804_add_bind_to_ip_and_registration_ip_to_user', 1447366470),
+('m141121_194858_split_browser_and_os_column', 1447366470),
+('m141201_220516_add_email_and_email_confirmed_to_user', 1447366471),
+('m141207_001649_create_basic_user_permissions', 1447366472);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `uploaded_file`
+--
+
+CREATE TABLE IF NOT EXISTS `uploaded_file` (
+`id` int(11) NOT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `filename` varchar(256) DEFAULT NULL,
+  `size` int(11) DEFAULT NULL,
+  `type` varchar(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+`id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `auth_key` varchar(32) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `confirmation_token` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `superadmin` smallint(6) DEFAULT '0',
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  `registration_ip` varchar(15) DEFAULT NULL,
+  `bind_to_ip` varchar(255) DEFAULT NULL,
+  `email` varchar(128) DEFAULT NULL,
+  `email_confirmed` smallint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `confirmation_token`, `status`, `superadmin`, `created_at`, `updated_at`, `registration_ip`, `bind_to_ip`, `email`, `email_confirmed`) VALUES
+(1, 'superadmin', '7sQpMph15IysCRCh5j3yWJBHU25RZcRD', '$2y$13$8HJVIoJ6DTJ8J1z6i6AmVeaCkcNteBqVsvlbog/PqVX8uaZfdc.aS', NULL, 10, 1, 1447366469, 1447366469, NULL, NULL, NULL, 0),
+(2, 'jeanmichel', 'w3RcSMHrBbgz3Bx8sKr09oZqBphIXDs8', '$2y$13$w8uH9svsLwUg5SKLlU5yc.4oHgnJhL47cKEjRsAYB9Bn7hbYmTE6q', NULL, 10, 0, 1449002855, 1449214572, NULL, NULL, 'auchalet@didou.local', 0),
+(3, 'testi', 'TLlYtFAoAFv1EBm2ZvhaWNDJsj7Kr00A', '$2y$13$WbLzd.XqzCAbe2TCWOq89.uFwpUoSTj6nHRuKeOSeHtLCuccmqKYS', NULL, 10, 0, 1449339861, 1449340007, NULL, NULL, 'test@test.com', 0);
+
+--
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `account`
+--
+ALTER TABLE `account`
+ ADD PRIMARY KEY (`id_account`), ADD KEY `user_id` (`user_id`);
+
+--
+-- Index pour la table `forum_category`
+--
+ALTER TABLE `forum_category`
+ ADD PRIMARY KEY (`id`), ADD KEY `id_user` (`id_user`), ADD KEY `id_category` (`id_category`);
+
+--
+-- Index pour la table `forum_post`
+--
+ALTER TABLE `forum_post`
+ ADD PRIMARY KEY (`id`), ADD KEY `id_user` (`id_user`,`id_topic`), ADD KEY `id_user_2` (`id_user`), ADD KEY `id_topic` (`id_topic`);
+
+--
+-- Index pour la table `forum_topic`
+--
+ALTER TABLE `forum_topic`
+ ADD PRIMARY KEY (`id`), ADD KEY `id_user` (`id_user`,`id_category`), ADD KEY `id_user_2` (`id_user`), ADD KEY `id_category` (`id_category`);
+
+--
+-- Index pour la table `member`
+--
+ALTER TABLE `member`
+ ADD PRIMARY KEY (`id_member`), ADD KEY `user_id` (`user_id`);
+
+--
+-- Index pour la table `migration`
+--
+ALTER TABLE `migration`
+ ADD PRIMARY KEY (`version`);
+
+--
+-- Index pour la table `uploaded_file`
+--
+ALTER TABLE `uploaded_file`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `account`
+--
+ALTER TABLE `account`
+MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT pour la table `forum_category`
+--
+ALTER TABLE `forum_category`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT pour la table `forum_post`
+--
+ALTER TABLE `forum_post`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT pour la table `forum_topic`
+--
+ALTER TABLE `forum_topic`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT pour la table `member`
+--
+ALTER TABLE `member`
+MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT pour la table `uploaded_file`
+--
+ALTER TABLE `uploaded_file`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `account`
+--
+ALTER TABLE `account`
+ADD CONSTRAINT `fk_user_id_account` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Contraintes pour la table `forum_category`
+--
+ALTER TABLE `forum_category`
+ADD CONSTRAINT `theme` FOREIGN KEY (`id_category`) REFERENCES `forum_category` (`id`),
+ADD CONSTRAINT `user_category` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+
+--
+-- Contraintes pour la table `forum_post`
+--
+ALTER TABLE `forum_post`
+ADD CONSTRAINT `category_topic` FOREIGN KEY (`id_topic`) REFERENCES `forum_topic` (`id`),
+ADD CONSTRAINT `user_post` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+
+--
+-- Contraintes pour la table `forum_topic`
+--
+ALTER TABLE `forum_topic`
+ADD CONSTRAINT `topic_category` FOREIGN KEY (`id_category`) REFERENCES `forum_category` (`id`),
+ADD CONSTRAINT `topic_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+
+--
+-- Contraintes pour la table `member`
+--
+ALTER TABLE `member`
+ADD CONSTRAINT `fk_user_id_member` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
