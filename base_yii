@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Dim 03 Janvier 2016 à 11:22
+-- Généré le :  Lun 04 Janvier 2016 à 18:21
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `account` (
   `other` text,
   `newsletter` int(11) DEFAULT NULL,
   `avatar` int(11) DEFAULT NULL,
+  `gravatar` tinyint(1) NOT NULL DEFAULT '0',
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id_account`),
   KEY `user_id` (`user_id`),
@@ -51,9 +52,9 @@ CREATE TABLE IF NOT EXISTS `account` (
 -- Contenu de la table `account`
 --
 
-INSERT INTO `account` (`id_account`, `pseudo`, `sex`, `age`, `favorite_category`, `past`, `present`, `future`, `why_register`, `skills`, `interests`, `other`, `newsletter`, `avatar`, `user_id`) VALUES
-(1, 'Devow', 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, NULL, 2),
-(2, 'Devow', 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, NULL, 3);
+INSERT INTO `account` (`id_account`, `pseudo`, `sex`, `age`, `favorite_category`, `past`, `present`, `future`, `why_register`, `skills`, `interests`, `other`, `newsletter`, `avatar`, `gravatar`, `user_id`) VALUES
+(1, 'Devow', 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, NULL, 0, 2),
+(2, 'Devow', 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, 9, 0, 3);
 
 -- --------------------------------------------------------
 
@@ -108,14 +109,15 @@ CREATE TABLE IF NOT EXISTS `forum_post` (
   KEY `id_user` (`id_user`,`id_topic`),
   KEY `id_user_2` (`id_user`),
   KEY `id_topic` (`id_topic`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 --
 -- Contenu de la table `forum_post`
 --
 
 INSERT INTO `forum_post` (`id`, `title`, `content`, `score`, `id_user`, `id_topic`, `createdAt`, `updatedAt`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
-(1, 'Topic 1', 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', 0, 2, 1, '2015-12-01 20:49:54', '2015-12-01 19:49:54', NULL, NULL, NULL);
+(1, 'Topic 1', 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', 0, 2, 1, '2015-12-01 20:49:54', '2015-12-01 19:49:54', NULL, NULL, NULL),
+(2, NULL, 'fsdfsf', 0, 3, 1, '2016-01-03 17:17:54', '2016-01-03 17:17:54', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -213,10 +215,26 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
   `name` varchar(64) DEFAULT NULL,
   `filename` varchar(256) DEFAULT NULL,
   `extension` varchar(20) NOT NULL,
+  `alt` text,
   `size` int(11) DEFAULT NULL,
   `type` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Contenu de la table `upload_file`
+--
+
+INSERT INTO `upload_file` (`id`, `name`, `filename`, `extension`, `alt`, `size`, `type`) VALUES
+(1, 'TW4FQVeq', 'TW4FQVeq.jpg', 'jpg', 'TW4FQVeq', 32796, 'image/jpeg'),
+(2, '005-jean-michel-basquiat-theredlist', '005-jean-michel-basquiat-theredlist.jpg', 'jpg', '005-jean-michel-basquiat-theredlist', 57521, 'image/jpeg'),
+(3, '005-jean-michel-basquiat-theredlist', '005-jean-michel-basquiat-theredlist.jpg', 'jpg', '005-jean-michel-basquiat-theredlist', 57521, 'image/jpeg'),
+(4, 'TW4FQVeq', 'TW4FQVeq.jpg', 'jpg', 'TW4FQVeq', 32796, 'image/jpeg'),
+(5, 'TW4FQVeq', 'TW4FQVeq.jpg', 'jpg', 'TW4FQVeq', 32796, 'image/jpeg'),
+(6, 'avatar', 'avatar.jpg', 'v', 'avatar', 32796, 'image/jpeg'),
+(7, 'avatar', 'avatar.jpg', 'jpg', NULL, 57521, 'image/jpeg'),
+(8, 'avatar', 'avatar.jpg', 'jpg', NULL, 32796, 'image/jpeg'),
+(9, 'avatar', 'avatar.jpg', 'jpg', NULL, 780831, 'image/jpeg');
 
 -- --------------------------------------------------------
 
@@ -248,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `confirmation_token`, `status`, `superadmin`, `created_at`, `updated_at`, `registration_ip`, `bind_to_ip`, `email`, `email_confirmed`) VALUES
 (1, 'superadmin', '7sQpMph15IysCRCh5j3yWJBHU25RZcRD', '$2y$13$8HJVIoJ6DTJ8J1z6i6AmVeaCkcNteBqVsvlbog/PqVX8uaZfdc.aS', NULL, 10, 1, 1447366469, 1447366469, NULL, NULL, NULL, 0),
 (2, 'jeanmichel', 'w3RcSMHrBbgz3Bx8sKr09oZqBphIXDs8', '$2y$13$w8uH9svsLwUg5SKLlU5yc.4oHgnJhL47cKEjRsAYB9Bn7hbYmTE6q', NULL, 10, 0, 1449002855, 1449214572, NULL, NULL, 'auchalet@didou.local', 0),
-(3, 'testi', 'TLlYtFAoAFv1EBm2ZvhaWNDJsj7Kr00A', '$2y$13$WbLzd.XqzCAbe2TCWOq89.uFwpUoSTj6nHRuKeOSeHtLCuccmqKYS', NULL, 10, 0, 1449339861, 1449340007, NULL, NULL, 'test@test.com', 0);
+(3, 'testi', 'TLlYtFAoAFv1EBm2ZvhaWNDJsj7Kr00A', '$2y$13$uns4ilxbg0QRFI/7ZMqVieUx5B6Oz2WBKo2dvyYGi89JKSx4ynNsi', NULL, 10, 0, 1449339861, 1451841357, NULL, NULL, 'alexis.michallet@protonmail.com', 0);
 
 --
 -- Contraintes pour les tables exportées
