@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
--- Client :  127.0.0.1
--- Généré le :  Mar 05 Janvier 2016 à 00:06
--- Version du serveur :  5.6.17
--- Version de PHP :  5.5.12
+-- Host: localhost
+-- Generation Time: Jan 20, 2016 at 10:56 PM
+-- Server version: 5.5.46-0ubuntu0.14.04.2
+-- PHP Version: 5.5.9-1ubuntu4.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,18 +17,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données :  `hvtv`
+-- Database: `hvtv`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `account`
+-- Table structure for table `account`
 --
 
 CREATE TABLE IF NOT EXISTS `account` (
   `id_account` int(11) NOT NULL AUTO_INCREMENT,
-  `pseudo` varchar(128) NOT NULL,
   `sex` varchar(128) DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
   `favorite_category` int(11) DEFAULT NULL,
@@ -46,26 +45,360 @@ CREATE TABLE IF NOT EXISTS `account` (
   PRIMARY KEY (`id_account`),
   KEY `user_id` (`user_id`),
   KEY `avatar` (`avatar`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
--- Contenu de la table `account`
+-- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`id_account`, `pseudo`, `sex`, `age`, `favorite_category`, `past`, `present`, `future`, `why_register`, `skills`, `interests`, `other`, `newsletter`, `avatar`, `active_avatar`, `user_id`) VALUES
-(1, 'Devow', 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, NULL, 0, 2),
-(2, 'Devow', 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, 9, 2, 3);
+INSERT INTO `account` (`id_account`, `sex`, `age`, `favorite_category`, `past`, `present`, `future`, `why_register`, `skills`, `interests`, `other`, `newsletter`, `avatar`, `active_avatar`, `user_id`) VALUES
+(1, 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, NULL, 0, 1);
+
+-- --------------------------------------------------------
 
 --
--- Contraintes pour les tables exportées
+-- Table structure for table `auth_assignment`
+--
+
+CREATE TABLE IF NOT EXISTS `auth_assignment` (
+  `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`item_name`,`user_id`),
+  KEY `fk_auth_user_item` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_assignment`
+--
+
+INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
+('admin', 1, 1453025048);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item`
+--
+
+CREATE TABLE IF NOT EXISTS `auth_item` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `type` int(11) NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data` text COLLATE utf8_unicode_ci,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`name`),
+  KEY `rule_name` (`rule_name`),
+  KEY `idx-auth_item-type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item`
+--
+
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+('admin', 1, NULL, NULL, NULL, 1453025048, 1453025048),
+('author', 1, NULL, NULL, NULL, 1453025048, 1453025048),
+('createPost', 2, 'Create a post', NULL, NULL, 1453025048, 1453025048),
+('updatePost', 2, 'Update post', NULL, NULL, 1453025048, 1453025048);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item_child`
+--
+
+CREATE TABLE IF NOT EXISTS `auth_item_child` (
+  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`parent`,`child`),
+  KEY `child` (`child`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item_child`
+--
+
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('admin', 'author'),
+('author', 'createPost'),
+('admin', 'updatePost');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_rule`
+--
+
+CREATE TABLE IF NOT EXISTS `auth_rule` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `data` text COLLATE utf8_unicode_ci,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forum_category`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
+  `status` float NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_category` int(11) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `meta_title` text COLLATE utf8_unicode_ci,
+  `meta_description` text COLLATE utf8_unicode_ci,
+  `meta_keyword` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `id_user` (`id_user`),
+  KEY `id_category` (`id_category`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `forum_category`
+--
+
+INSERT INTO `forum_category` (`id`, `title`, `description`, `status`, `id_user`, `id_category`, `createdAt`, `updatedAt`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(1, 'Thème 1', 'dffsdmk', 1, 1, NULL, '2015-12-01 20:48:32', '0000-00-00 00:00:00', NULL, NULL, NULL),
+(2, 'Catégorie 1', 'fdsdfds', 1, 1, 1, '2015-12-01 20:48:57', '0000-00-00 00:00:00', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forum_post`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_post` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `content` text CHARACTER SET latin1 NOT NULL,
+  `score` float NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_topic` int(11) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `meta_title` text CHARACTER SET latin1,
+  `meta_description` text CHARACTER SET latin1,
+  `meta_keyword` text CHARACTER SET latin1,
+  PRIMARY KEY (`id`),
+  KEY `id_user` (`id_user`,`id_topic`),
+  KEY `id_user_2` (`id_user`),
+  KEY `id_topic` (`id_topic`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `forum_post`
+--
+
+INSERT INTO `forum_post` (`id`, `title`, `content`, `score`, `id_user`, `id_topic`, `createdAt`, `updatedAt`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(1, 'Topic 1', 'Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ', 1, 1, 1, '2016-01-12 19:20:57', '2015-12-01 19:49:54', NULL, NULL, NULL),
+(2, NULL, 'fsdfsf', 0, 1, 1, '2016-01-03 17:17:54', '2016-01-03 17:17:54', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forum_topic`
+--
+
+CREATE TABLE IF NOT EXISTS `forum_topic` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `status` float NOT NULL,
+  `slug` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_category` int(11) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `meta_title` text COLLATE utf8_unicode_ci,
+  `meta_description` text COLLATE utf8_unicode_ci,
+  `meta_keyword` text COLLATE utf8_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `id_user` (`id_user`,`id_category`),
+  KEY `id_user_2` (`id_user`),
+  KEY `id_category` (`id_category`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `forum_topic`
+--
+
+INSERT INTO `forum_topic` (`id`, `title`, `status`, `slug`, `id_user`, `id_category`, `createdAt`, `updatedAt`, `meta_title`, `meta_description`, `meta_keyword`) VALUES
+(1, 'Topic 1', 0, NULL, 1, 2, '2015-12-01 19:49:31', '2015-12-01 19:49:31', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `member`
+--
+
+CREATE TABLE IF NOT EXISTS `member` (
+  `id_member` int(11) NOT NULL AUTO_INCREMENT,
+  `adhesion` date NOT NULL,
+  `position` varchar(255) NOT NULL,
+  `paid` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id_member`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `member`
+--
+
+INSERT INTO `member` (`id_member`, `adhesion`, `position`, `paid`, `user_id`) VALUES
+(1, '2015-11-11', 'Admin', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migration`
+--
+
+CREATE TABLE IF NOT EXISTS `migration` (
+  `version` varchar(180) NOT NULL,
+  `apply_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`version`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `migration`
+--
+
+INSERT INTO `migration` (`version`, `apply_time`) VALUES
+('m000000_000000_base', 1442339891),
+('m130524_201442_init', 1442339926),
+('m140506_102106_rbac_init', 1452632532),
+('m140608_173539_create_user_table', 1447366467),
+('m140611_133903_init_rbac', 1447366468),
+('m140808_073114_create_auth_item_group_table', 1447366468),
+('m140809_072112_insert_superadmin_to_user', 1447366469),
+('m140809_073114_insert_common_permisison_to_auth_item', 1447366469),
+('m141023_141535_create_user_visit_log', 1447366469),
+('m141116_115804_add_bind_to_ip_and_registration_ip_to_user', 1447366470),
+('m141121_194858_split_browser_and_os_column', 1447366470),
+('m141201_220516_add_email_and_email_confirmed_to_user', 1447366471),
+('m141207_001649_create_basic_user_permissions', 1447366472);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `upload_file`
+--
+
+CREATE TABLE IF NOT EXISTS `upload_file` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(64) DEFAULT NULL,
+  `filename` varchar(256) DEFAULT NULL,
+  `extension` varchar(20) NOT NULL,
+  `alt` text,
+  `size` int(11) DEFAULT NULL,
+  `type` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- Dumping data for table `upload_file`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `auth_key` varchar(32) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `confirmation_token` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `superadmin` smallint(6) DEFAULT '0',
+  `created_at` int(11) NOT NULL,
+  `updated_at` int(11) NOT NULL,
+  `registration_ip` varchar(15) DEFAULT NULL,
+  `bind_to_ip` varchar(255) DEFAULT NULL,
+  `email` varchar(128) DEFAULT NULL,
+  `email_confirmed` smallint(1) NOT NULL DEFAULT '0',
+  `password_reset_token` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `confirmation_token`, `status`, `superadmin`, `created_at`, `updated_at`, `registration_ip`, `bind_to_ip`, `email`, `email_confirmed`, `password_reset_token`) VALUES
+(1, 'superadmin', '7sQpMph15IysCRCh5j3yWJBHU25RZcRD', '$2y$13$8HJVIoJ6DTJ8J1z6i6AmVeaCkcNteBqVsvlbog/PqVX8uaZfdc.aS', NULL, 10, 1, 1447366469, 1447366469, NULL, NULL, NULL, 0, NULL);
+
+
+--
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `account`
+-- Constraints for table `account`
 --
 ALTER TABLE `account`
   ADD CONSTRAINT `fk_avatar_file` FOREIGN KEY (`avatar`) REFERENCES `upload_file` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
   ADD CONSTRAINT `fk_user_id_account` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_auth_user_item` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `forum_category`
+--
+ALTER TABLE `forum_category`
+  ADD CONSTRAINT `theme` FOREIGN KEY (`id_category`) REFERENCES `forum_category` (`id`),
+  ADD CONSTRAINT `user_category` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `forum_post`
+--
+ALTER TABLE `forum_post`
+  ADD CONSTRAINT `category_topic` FOREIGN KEY (`id_topic`) REFERENCES `forum_topic` (`id`),
+  ADD CONSTRAINT `user_post` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `forum_topic`
+--
+ALTER TABLE `forum_topic`
+  ADD CONSTRAINT `topic_category` FOREIGN KEY (`id_category`) REFERENCES `forum_category` (`id`),
+  ADD CONSTRAINT `topic_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `member`
+--
+ALTER TABLE `member`
+  ADD CONSTRAINT `fk_user_id_member` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
