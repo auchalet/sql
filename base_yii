@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.10deb1
+-- version 4.2.12deb2+deb8u1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 20, 2016 at 10:56 PM
--- Server version: 5.5.46-0ubuntu0.14.04.2
--- PHP Version: 5.5.9-1ubuntu4.14
+-- Generation Time: Feb 12, 2016 at 08:43 PM
+-- Server version: 5.5.47-0+deb8u1
+-- PHP Version: 5.6.17-0+deb8u1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `account` (
-  `id_account` int(11) NOT NULL AUTO_INCREMENT,
+`id_account` int(11) NOT NULL,
   `sex` varchar(128) DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
   `favorite_category` int(11) DEFAULT NULL,
@@ -41,18 +41,18 @@ CREATE TABLE IF NOT EXISTS `account` (
   `newsletter` int(11) DEFAULT NULL,
   `avatar` int(11) DEFAULT NULL,
   `active_avatar` int(1) NOT NULL DEFAULT '0' COMMENT 'défaut : 0 / upload : 1 / gravatar : 2',
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id_account`),
-  KEY `user_id` (`user_id`),
-  KEY `avatar` (`avatar`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `account`
 --
 
 INSERT INTO `account` (`id_account`, `sex`, `age`, `favorite_category`, `past`, `present`, `future`, `why_register`, `skills`, `interests`, `other`, `newsletter`, `avatar`, `active_avatar`, `user_id`) VALUES
-(1, 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, NULL, 0, 1);
+(1, 'female', 2015, NULL, 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', 'Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum ', NULL, NULL, 0, 1),
+(5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 18),
+(6, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 19),
+(7, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 20);
 
 -- --------------------------------------------------------
 
@@ -63,9 +63,7 @@ INSERT INTO `account` (`id_account`, `sex`, `age`, `favorite_category`, `past`, 
 CREATE TABLE IF NOT EXISTS `auth_assignment` (
   `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
-  `created_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`item_name`,`user_id`),
-  KEY `fk_auth_user_item` (`user_id`)
+  `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -73,7 +71,9 @@ CREATE TABLE IF NOT EXISTS `auth_assignment` (
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
-('admin', 1, 1453025048);
+('admin', 19, NULL),
+('user', 19, 1454709380),
+('user', 20, 1454709459);
 
 -- --------------------------------------------------------
 
@@ -88,10 +88,7 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
   `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
   `data` text COLLATE utf8_unicode_ci,
   `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`name`),
-  KEY `rule_name` (`rule_name`),
-  KEY `idx-auth_item-type` (`type`)
+  `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -100,9 +97,19 @@ CREATE TABLE IF NOT EXISTS `auth_item` (
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
 ('admin', 1, NULL, NULL, NULL, 1453025048, 1453025048),
-('author', 1, NULL, NULL, NULL, 1453025048, 1453025048),
+('adminForum', 2, 'Création/Modification de thèmes et catégories du forum', NULL, NULL, 1453757949, 1453757949),
+('connectBackoffice', 2, 'Connexion au backoffice', NULL, NULL, 1453557453, 1453557453),
 ('createPost', 2, 'Create a post', NULL, NULL, 1453025048, 1453025048),
-('updatePost', 2, 'Update post', NULL, NULL, 1453025048, 1453025048);
+('createTopic', 2, 'Créer un sujet', NULL, NULL, 1453757574, 1453757574),
+('editeur', 1, 'Editeur d''articles', NULL, NULL, 1453756177, 1453756177),
+('manageRbac', 2, 'Gestion des droits et des rôles', NULL, NULL, 1453758055, 1453758055),
+('membre', 1, 'Membre de l''asso', NULL, NULL, 1453557393, 1453557393),
+('modoComments', 1, 'Modérateurs de commentaires', NULL, NULL, 1453758392, 1453758392),
+('updateOwnUser', 2, 'Modification des attributs User', NULL, NULL, 1453763327, 1453764202),
+('updatePost', 2, 'Update post', NULL, NULL, 1453025048, 1453025048),
+('updateUser', 2, 'Modification des Users', NULL, NULL, 1453763438, 1453763438),
+('user', 1, 'Utilisateur identifié', NULL, NULL, 1453755968, 1453755968),
+('vote', 2, 'Voter', NULL, NULL, 1453757751, 1453757751);
 
 -- --------------------------------------------------------
 
@@ -112,9 +119,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 
 CREATE TABLE IF NOT EXISTS `auth_item_child` (
   `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`parent`,`child`),
-  KEY `child` (`child`)
+  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -122,9 +127,23 @@ CREATE TABLE IF NOT EXISTS `auth_item_child` (
 --
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
-('admin', 'author'),
-('author', 'createPost'),
-('admin', 'updatePost');
+('membre', 'adminForum'),
+('membre', 'connectBackoffice'),
+('membre', 'createPost'),
+('user', 'createPost'),
+('membre', 'createTopic'),
+('user', 'createTopic'),
+('membre', 'editeur'),
+('admin', 'manageRbac'),
+('admin', 'membre'),
+('admin', 'modoComments'),
+('updateUser', 'updateOwnUser'),
+('user', 'updateOwnUser'),
+('membre', 'updatePost'),
+('admin', 'updateUser'),
+('modoComments', 'user'),
+('membre', 'vote'),
+('user', 'vote');
 
 -- --------------------------------------------------------
 
@@ -136,8 +155,7 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
   `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   `data` text COLLATE utf8_unicode_ci,
   `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL,
-  PRIMARY KEY (`name`)
+  `updated_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -147,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `auth_rule` (
 --
 
 CREATE TABLE IF NOT EXISTS `forum_category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `status` float NOT NULL,
@@ -157,11 +175,8 @@ CREATE TABLE IF NOT EXISTS `forum_category` (
   `updatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `meta_title` text COLLATE utf8_unicode_ci,
   `meta_description` text COLLATE utf8_unicode_ci,
-  `meta_keyword` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`),
-  KEY `id_category` (`id_category`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+  `meta_keyword` text COLLATE utf8_unicode_ci
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `forum_category`
@@ -178,7 +193,7 @@ INSERT INTO `forum_category` (`id`, `title`, `description`, `status`, `id_user`,
 --
 
 CREATE TABLE IF NOT EXISTS `forum_post` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `title` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
   `content` text CHARACTER SET latin1 NOT NULL,
   `score` float NOT NULL,
@@ -188,12 +203,8 @@ CREATE TABLE IF NOT EXISTS `forum_post` (
   `updatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `meta_title` text CHARACTER SET latin1,
   `meta_description` text CHARACTER SET latin1,
-  `meta_keyword` text CHARACTER SET latin1,
-  PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`,`id_topic`),
-  KEY `id_user_2` (`id_user`),
-  KEY `id_topic` (`id_topic`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+  `meta_keyword` text CHARACTER SET latin1
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `forum_post`
@@ -210,7 +221,7 @@ INSERT INTO `forum_post` (`id`, `title`, `content`, `score`, `id_user`, `id_topi
 --
 
 CREATE TABLE IF NOT EXISTS `forum_topic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `status` float NOT NULL,
   `slug` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -220,12 +231,8 @@ CREATE TABLE IF NOT EXISTS `forum_topic` (
   `updatedAt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `meta_title` text COLLATE utf8_unicode_ci,
   `meta_description` text COLLATE utf8_unicode_ci,
-  `meta_keyword` text COLLATE utf8_unicode_ci,
-  PRIMARY KEY (`id`),
-  KEY `id_user` (`id_user`,`id_category`),
-  KEY `id_user_2` (`id_user`),
-  KEY `id_category` (`id_category`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+  `meta_keyword` text COLLATE utf8_unicode_ci
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `forum_topic`
@@ -241,14 +248,12 @@ INSERT INTO `forum_topic` (`id`, `title`, `status`, `slug`, `id_user`, `id_categ
 --
 
 CREATE TABLE IF NOT EXISTS `member` (
-  `id_member` int(11) NOT NULL AUTO_INCREMENT,
+`id_member` int(11) NOT NULL,
   `adhesion` date NOT NULL,
   `position` varchar(255) NOT NULL,
   `paid` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id_member`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `member`
@@ -265,8 +270,7 @@ INSERT INTO `member` (`id_member`, `adhesion`, `position`, `paid`, `user_id`) VA
 
 CREATE TABLE IF NOT EXISTS `migration` (
   `version` varchar(180) NOT NULL,
-  `apply_time` int(11) DEFAULT NULL,
-  PRIMARY KEY (`version`)
+  `apply_time` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -295,20 +299,14 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `upload_file` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(64) DEFAULT NULL,
   `filename` varchar(256) DEFAULT NULL,
   `extension` varchar(20) NOT NULL,
   `alt` text,
   `size` int(11) DEFAULT NULL,
-  `type` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
-
---
--- Dumping data for table `upload_file`
---
-
+  `type` varchar(32) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -317,7 +315,7 @@ CREATE TABLE IF NOT EXISTS `upload_file` (
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `auth_key` varchar(32) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
@@ -330,18 +328,134 @@ CREATE TABLE IF NOT EXISTS `user` (
   `bind_to_ip` varchar(255) DEFAULT NULL,
   `email` varchar(128) DEFAULT NULL,
   `email_confirmed` smallint(1) NOT NULL DEFAULT '0',
-  `password_reset_token` text,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+  `password_reset_token` text
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `confirmation_token`, `status`, `superadmin`, `created_at`, `updated_at`, `registration_ip`, `bind_to_ip`, `email`, `email_confirmed`, `password_reset_token`) VALUES
-(1, 'superadmin', '7sQpMph15IysCRCh5j3yWJBHU25RZcRD', '$2y$13$8HJVIoJ6DTJ8J1z6i6AmVeaCkcNteBqVsvlbog/PqVX8uaZfdc.aS', NULL, 10, 1, 1447366469, 1447366469, NULL, NULL, NULL, 0, NULL);
+(1, 'superadmin', '7sQpMph15IysCRCh5j3yWJBHU25RZcRD', '$2y$13$8HJVIoJ6DTJ8J1z6i6AmVeaCkcNteBqVsvlbog/PqVX8uaZfdc.aS', NULL, 10, 1, 1447366469, 1447366469, NULL, NULL, NULL, 0, NULL),
+(18, 'auchalet2', '5rzV6355EiLYW-tQoGXYUegFre4w7nps', '$2y$13$ta.RmMPnRoXCrTfdDduNTeENQ7CTPVtj5xM4rcPSPZDDMtWLt14T.', NULL, 10, 0, 1454708613, 1455304660, NULL, NULL, 'alexis.michallet@gmaisl.come', 0, NULL),
+(19, 'auchalet', '9L1hTALrOLx2P9J1bUrqTEwKtiXqKWQo', '$2y$13$egyQh/RBhXruT385kFilwuRSqjKgnGEboUNEd.8IsJGqGQcDYpt2m', NULL, 10, 1, 1454709379, 1455048132, NULL, NULL, 'alexis.michallet@gmail.com', 0, NULL),
+(20, 'test', '18E2ACLW3fH81OfJKLUqZsgm56xwABTE', '$2y$13$FCo.zy8qywVLV52erTKWyOOSn6BRL86Pq1925/YxkVMUgsyAdU8zG', NULL, 10, 1, 1454709459, 1455048642, NULL, NULL, 'alexis.michallet@protonmail.com', 0, NULL);
 
+--
+-- Indexes for dumped tables
+--
 
+--
+-- Indexes for table `account`
+--
+ALTER TABLE `account`
+ ADD PRIMARY KEY (`id_account`), ADD KEY `user_id` (`user_id`), ADD KEY `avatar` (`avatar`);
+
+--
+-- Indexes for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+ ADD PRIMARY KEY (`item_name`,`user_id`), ADD KEY `fk_auth_user_item` (`user_id`);
+
+--
+-- Indexes for table `auth_item`
+--
+ALTER TABLE `auth_item`
+ ADD PRIMARY KEY (`name`), ADD KEY `rule_name` (`rule_name`), ADD KEY `idx-auth_item-type` (`type`);
+
+--
+-- Indexes for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+ ADD PRIMARY KEY (`parent`,`child`), ADD KEY `child` (`child`);
+
+--
+-- Indexes for table `auth_rule`
+--
+ALTER TABLE `auth_rule`
+ ADD PRIMARY KEY (`name`);
+
+--
+-- Indexes for table `forum_category`
+--
+ALTER TABLE `forum_category`
+ ADD PRIMARY KEY (`id`), ADD KEY `id_user` (`id_user`), ADD KEY `id_category` (`id_category`);
+
+--
+-- Indexes for table `forum_post`
+--
+ALTER TABLE `forum_post`
+ ADD PRIMARY KEY (`id`), ADD KEY `id_user` (`id_user`,`id_topic`), ADD KEY `id_user_2` (`id_user`), ADD KEY `id_topic` (`id_topic`);
+
+--
+-- Indexes for table `forum_topic`
+--
+ALTER TABLE `forum_topic`
+ ADD PRIMARY KEY (`id`), ADD KEY `id_user` (`id_user`,`id_category`), ADD KEY `id_user_2` (`id_user`), ADD KEY `id_category` (`id_category`);
+
+--
+-- Indexes for table `member`
+--
+ALTER TABLE `member`
+ ADD PRIMARY KEY (`id_member`), ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `migration`
+--
+ALTER TABLE `migration`
+ ADD PRIMARY KEY (`version`);
+
+--
+-- Indexes for table `upload_file`
+--
+ALTER TABLE `upload_file`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `account`
+--
+ALTER TABLE `account`
+MODIFY `id_account` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `forum_category`
+--
+ALTER TABLE `forum_category`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `forum_post`
+--
+ALTER TABLE `forum_post`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `forum_topic`
+--
+ALTER TABLE `forum_topic`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `member`
+--
+ALTER TABLE `member`
+MODIFY `id_member` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `upload_file`
+--
+ALTER TABLE `upload_file`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
 --
 -- Constraints for dumped tables
 --
@@ -350,55 +464,55 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `confirmation
 -- Constraints for table `account`
 --
 ALTER TABLE `account`
-  ADD CONSTRAINT `fk_avatar_file` FOREIGN KEY (`avatar`) REFERENCES `upload_file` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
-  ADD CONSTRAINT `fk_user_id_account` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+ADD CONSTRAINT `fk_avatar_file` FOREIGN KEY (`avatar`) REFERENCES `upload_file` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+ADD CONSTRAINT `fk_user_id_account` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `auth_assignment`
 --
 ALTER TABLE `auth_assignment`
-  ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_auth_user_item` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `fk_auth_user_item` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `auth_item`
 --
 ALTER TABLE `auth_item`
-  ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
+ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `auth_item_child`
 --
 ALTER TABLE `auth_item_child`
-  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `forum_category`
 --
 ALTER TABLE `forum_category`
-  ADD CONSTRAINT `theme` FOREIGN KEY (`id_category`) REFERENCES `forum_category` (`id`),
-  ADD CONSTRAINT `user_category` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+ADD CONSTRAINT `theme` FOREIGN KEY (`id_category`) REFERENCES `forum_category` (`id`),
+ADD CONSTRAINT `user_category` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `forum_post`
 --
 ALTER TABLE `forum_post`
-  ADD CONSTRAINT `category_topic` FOREIGN KEY (`id_topic`) REFERENCES `forum_topic` (`id`),
-  ADD CONSTRAINT `user_post` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+ADD CONSTRAINT `category_topic` FOREIGN KEY (`id_topic`) REFERENCES `forum_topic` (`id`),
+ADD CONSTRAINT `user_post` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `forum_topic`
 --
 ALTER TABLE `forum_topic`
-  ADD CONSTRAINT `topic_category` FOREIGN KEY (`id_category`) REFERENCES `forum_category` (`id`),
-  ADD CONSTRAINT `topic_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+ADD CONSTRAINT `topic_category` FOREIGN KEY (`id_category`) REFERENCES `forum_category` (`id`),
+ADD CONSTRAINT `topic_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 --
 -- Constraints for table `member`
 --
 ALTER TABLE `member`
-  ADD CONSTRAINT `fk_user_id_member` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+ADD CONSTRAINT `fk_user_id_member` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
