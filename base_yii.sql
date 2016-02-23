@@ -640,6 +640,19 @@ CREATE TABLE IF NOT EXISTS `user_has_project` (
   PRIMARY KEY (`ID_user`,`ID_project`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
+
+CREATE TABLE IF NOT EXISTS `moderation_page` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comment` text COLLATE utf8_bin NOT NULL,
+  `vote` tinyint(1) NOT NULL COMMENT '1 : a voté, 0 : n''a pas voté',
+  `user_id` int(11) NOT NULL,
+  `page_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `page_id` (`page_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
+
+
 --
 -- Constraints for dumped tables
 --
@@ -723,6 +736,15 @@ ALTER TABLE `site_page`
 ALTER TABLE `site_page_tag`
   ADD CONSTRAINT `site_page_tag_ibfk_1` FOREIGN KEY (`page_id`) REFERENCES `site_page` (`id`),
   ADD CONSTRAINT `site_page_tag_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`);
+
+
+--
+-- Constraints for table `moderation_page`
+--
+ALTER TABLE `moderation_page`
+  ADD CONSTRAINT `fk_page_moderation` FOREIGN KEY (`page_id`) REFERENCES `site_page` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_user_moderation` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
